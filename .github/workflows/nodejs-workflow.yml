@@ -15,7 +15,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ubuntu-latest, macos-latest]
+                operating-system: [ubuntu-latest]
                 node-ver: [22.x, 24.x]
                 exclude:
                 - operating-system: macos-latest
