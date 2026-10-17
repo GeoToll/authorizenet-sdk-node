@@ -3,8 +3,10 @@ version: 2
 
 # GeoToll org standard (GeoToll/backlog#347). Weekly version updates per ecosystem;
 # minor+patch are grouped into one PR per directory, majors arrive individually.
-# Node is pinned to the 24 LTS major (GeoToll/backlog#268): @types/node and the node
-# base image must not drift past 24. Security updates are not affected by these rules.
+#
+# Node is capped at the 24 LTS major (GeoToll/backlog#268): every npm entry ignores
+# @types/node >= 25 and every docker entry ignores the node image >= 25. Updates up to
+# 24.x still flow; moving past 24 is a coordinated org-wide upgrade, never a Dependabot PR.
 
 updates:
 
@@ -30,4 +32,4 @@ updates:
         update-types: ["minor", "patch"]
     ignore:
       - dependency-name: "@types/node"
-        update-types: ["version-update:semver-major"]
+        versions: [">= 25"]
