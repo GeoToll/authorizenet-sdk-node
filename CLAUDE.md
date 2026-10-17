@@ -44,6 +44,9 @@ Proxy, timeout and logging come from `lib/config.js` or a `config` object passed
 `.github/workflows/nodejs-workflow.yml` (push, pull_request, manual): on Node 22.x and 24.x it runs
 `npm install && npm test`, packs the SDK, installs it into a checkout of
 `authorizenet/sample-code-node` and runs its `test-runner.js`. `.travis.yml` is a leftover from upstream.
+The sandbox account is shared, so runs are serialized (`max-parallel: 1`, per-ref `concurrency`, push only on `master`);
+parallel runs trigger duplicate-transaction errors. `test-paypalexpresscheckout.js` and the Capture Only test are
+`describe.skip` because the sandbox rejects them (errors 19/63 and 67).
 No release/publish pipeline.
 
 ## Dependencies & security
