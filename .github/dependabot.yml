@@ -1,11 +1,33 @@
+---
 version: 2
+
+# GeoToll org standard (GeoToll/backlog#347). Weekly version updates per ecosystem;
+# minor+patch are grouped into one PR per directory, majors arrive individually.
+# Node is pinned to the 24 LTS major (GeoToll/backlog#268): @types/node and the node
+# base image must not drift past 24. Security updates are not affected by these rules.
+
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "[github-actions] "
+    groups:
+      github-actions:
+        patterns: ["*"]
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "[npm] "
+    groups:
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
