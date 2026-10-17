@@ -1,11 +1,35 @@
+---
 version: 2
+
+# GeoToll org standard (GeoToll/backlog#347). Weekly version updates per ecosystem;
+# minor+patch are grouped into one PR per directory, majors arrive individually.
+#
+# Node is capped at the 24 LTS major (GeoToll/backlog#268): every npm entry ignores
+# @types/node >= 25 and every docker entry ignores the node image >= 25. Updates up to
+# 24.x still flow; moving past 24 is a coordinated org-wide upgrade, never a Dependabot PR.
+
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "[github-actions] "
+    groups:
+      github-actions:
+        patterns: ["*"]
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "[npm] "
+    groups:
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "@types/node"
+        versions: [">= 25"]
